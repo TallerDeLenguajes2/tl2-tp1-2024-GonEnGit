@@ -3,23 +3,27 @@ namespace Empresa;
 
 public class Pedido
 {
-    private int numero;
-    private string observacion;
-    private Cliente cliente;
-    private enum estados
+    public enum Estados
     {
         Pendiente,
         Completado
     }
 
+    private int numero;
+    private string observacion;
+    private Cliente cliente;
+    private Estados estadoActual;
+
     public int Numero { get => numero; set => numero = value; }
     public string Observacion { get => observacion; set => observacion = value; }
     public Cliente Cliente { get => cliente; set => cliente = value; }
+    public Estados EstadoActual { get => estadoActual; set => estadoActual = value; }
 
-    public Pedido(int num, string obs, Cliente cli)
+    public Pedido(int num, string obs, string nombreCli, string dirCli, string telCli, string datosDir)
     {
         numero = num;
         observacion = obs;
-        Cliente = cli;
+        cliente = new Cliente(nombreCli, dirCli, telCli,datosDir);
+        EstadoActual = Estados.Pendiente;
     }
 }
