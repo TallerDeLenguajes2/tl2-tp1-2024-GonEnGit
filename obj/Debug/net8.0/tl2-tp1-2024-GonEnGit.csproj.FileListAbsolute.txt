@@ -1,0 +1,14 @@
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\bin\Debug\net8.0\tl2-tp1-2024-GonEnGit.exe
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\bin\Debug\net8.0\tl2-tp1-2024-GonEnGit.deps.json
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\bin\Debug\net8.0\tl2-tp1-2024-GonEnGit.runtimeconfig.json
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\bin\Debug\net8.0\tl2-tp1-2024-GonEnGit.dll
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\bin\Debug\net8.0\tl2-tp1-2024-GonEnGit.pdb
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.AssemblyInfoInputs.cache
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.AssemblyInfo.cs
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.csproj.CoreCompileInputs.cache
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.dll
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\refint\tl2-tp1-2024-GonEnGit.dll
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.pdb
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.genruntimeconfig.cache
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\ref\tl2-tp1-2024-GonEnGit.dll
