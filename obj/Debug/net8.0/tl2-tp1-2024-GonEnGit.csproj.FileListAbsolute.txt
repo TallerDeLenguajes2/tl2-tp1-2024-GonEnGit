@@ -12,3 +12,4 @@ C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\refint
 C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.pdb
 C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.genruntimeconfig.cache
 C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\ref\tl2-tp1-2024-GonEnGit.dll
+C:\Users\g\Desktop\paraHacerTaller\tl2-tp1-2024-GonEnGit\obj\Debug\net8.0\tl2-tp1-2024-GonEnGit.sourcelink.json

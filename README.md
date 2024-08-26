@@ -1,5 +1,5 @@
 1. Cliente es creado por Pedido por lo que es una composicion;
-   Cadete tiene una relacion de composicion con Pedido;
+   Los pedidos se le asignan a los cadetes;
    Cadete pertenece a Cadeteria, es una relación de composicion;
 
 2. 
