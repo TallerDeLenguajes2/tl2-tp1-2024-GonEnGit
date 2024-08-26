@@ -21,15 +21,13 @@ public class Cadeteria
 
     public List<Cadete> nuevaLista()
     {
-        int id;
         List<Cadete> listaTemp = new List<Cadete>();
         string[] partes, renglonesArchivo = File.ReadAllLines("csv/DatosCadetes.csv");
 
         foreach (string renglon in renglonesArchivo)
         {
             partes = renglon.Split(",");
-            int.TryParse(partes[0], out id); // no hace falta un control, este caso sabes que es un int
-            Cadete nuevoCadete = new Cadete(id, partes[1], partes[2], partes[3]);
+            Cadete nuevoCadete = new Cadete(partes[0], partes[1], partes[2], partes[3]);
             listaTemp.Add(nuevoCadete);
         }
 

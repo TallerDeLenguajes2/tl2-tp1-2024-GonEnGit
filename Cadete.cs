@@ -2,20 +2,20 @@ namespace Empresa;
 
 public class Cadete
 {
-    private int id;
+    private string id;
     private string nombre;
     private string direccion;
     private string telefono;
     // podes inicializarla aquí, tambien vale para la composición
     private List<Pedido> listaPedidos = new List<Pedido>();
 
-    public int Id { get => id; set => id = value; }
+    public string Id { get => id; set => id = value; }
     public string Nombre { get => nombre; set => nombre = value; }
     public string Direccion { get => direccion; set => direccion = value; }
     public string Telefono { get => telefono; set => telefono = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
-    public Cadete(int id, string nombreCadete, string direccionCadete, string telefonoCadete)
+    public Cadete(string id, string nombreCadete, string direccionCadete, string telefonoCadete)
     {
         Id = id;
         Nombre = nombreCadete;
