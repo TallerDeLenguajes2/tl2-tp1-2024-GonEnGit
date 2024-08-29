@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Empresa;
+namespace EspacioEmpresa;
 
 public class Cadeteria
 {
@@ -32,5 +32,24 @@ public class Cadeteria
         }
 
         return listaTemp;
+    }
+
+    public void PrimerosPedidos()
+    {
+        Random rnd = new Random();
+        int numero;
+        string[] datosPedido, datosCliente;
+        string[] renglonesPedidos = File.ReadAllLines("csv/DatosPedidos.csv");
+        string[] renglonesClientes = File.ReadAllLines("csv/DatosClientes.csv");
+
+        for (int indice = 0; indice < renglonesPedidos.Length; indice++)
+        {
+            datosPedido = renglonesPedidos[indice].Split(",");
+            datosCliente = renglonesClientes[indice].Split(",");
+            int.TryParse(datosPedido[0], out numero);
+            Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
+            numero = rnd.Next(0,2);
+            listaCadetes[numero].ListaPedidos.Add(nuevoPedido);
+        }
     }
 }
