@@ -19,7 +19,6 @@ public static class Textos
         bool pruebaOpciones;
         int valor;
         pruebaOpciones = int.TryParse(entrada, out valor);
-        valor -= 1;
         if (pruebaOpciones == false || valor <= 0 || valor >= 5)
         {
             valor = 99999;

@@ -7,16 +7,19 @@ public class Cadeteria
     private string nombre;
     private string telefono;
     private List<Cadete> listaCadetes;
+    private List<Pedido> listaPedidos;
 
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
+    public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
     public Cadeteria(string nombreLocal, string telefonoLocal)
     {
         Nombre = nombreLocal;
         Telefono = telefonoLocal;
         listaCadetes = nuevaLista();
+        listaPedidos = new List<Pedido>();
     }
 
     public List<Cadete> nuevaLista()
@@ -34,9 +37,8 @@ public class Cadeteria
         return listaTemp;
     }
 
-    public void PrimerosPedidos()
+    public void PrimerosPedidos()   // esto tiene que cambiar a una clase para leer archivos
     {
-        Random rnd = new Random();
         int numero;
         string[] datosPedido, datosCliente;
         string[] renglonesPedidos = File.ReadAllLines("csv/DatosPedidos.csv");
@@ -48,8 +50,31 @@ public class Cadeteria
             datosCliente = renglonesClientes[indice].Split(",");
             int.TryParse(datosPedido[0], out numero);
             Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
-            numero = rnd.Next(0,2);
-            listaCadetes[numero].ListaPedidos.Add(nuevoPedido);
+            listaPedidos.Add(nuevoPedido);
         }
+    }
+
+    public void AsignarCadeteAPedido(string idCadete, int idPedido)
+    {
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.Numero == idPedido)
+            {
+                pedido.NumeroDeCadete = idCadete;
+            }
+        }
+    }
+
+    public double JornalACobrar(string idCadete)
+    {
+        double total = 0;
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.NumeroDeCadete == idCadete)
+            {
+                total += 500;
+            }
+        }
+        return total;
     }
 }

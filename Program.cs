@@ -4,6 +4,9 @@ using EspacioTextos;
 
 int tamanioPantalla = Console.WindowWidth;
 int entradaUsuario = 99999;
+int idPedido;
+double jornal;
+string idCadete;
 char continuar = 'S';
 string linea;
 string[] datosArchivo;
@@ -19,7 +22,8 @@ Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Te
 Console.WriteLine(Textos.CentrarRenglon("1. Asignar nuevo pedido.", tamanioPantalla));
 Console.WriteLine(Textos.CentrarRenglon("2. Reasignar un pedido.", tamanioPantalla));
 Console.WriteLine(Textos.CentrarRenglon("3. Alta de pedidos.", tamanioPantalla));
-Console.WriteLine(Textos.CentrarRenglon("4. Informe del día.", tamanioPantalla));
+Console.WriteLine(Textos.CentrarRenglon("4. Calcular jornal.", tamanioPantalla));
+Console.WriteLine(Textos.CentrarRenglon("5. Cerrar programa.", tamanioPantalla));
 
 while (continuar == 'S')
 {
@@ -35,12 +39,38 @@ while (continuar == 'S')
     switch (entradaUsuario)
     {
         case 1:
+            Console.Write("Ingrese el ID del cadete: ");
+            idCadete = Console.ReadLine();
+            Console.Write("Ingrese el ID del pedido a asignar: ");
+            int.TryParse(Console.ReadLine(), out idPedido);
+
+            foreach (Pedido pedido in local.ListaPedidos)
+            {
+                if (pedido.Numero == idPedido)
+                {
+                    pedido.NumeroDeCadete = idCadete;
+                }
+            }
             break;
         case 2:
             break;
         case 3:
             break;
         case 4:
+            Console.WriteLine("Ingrese el id del cadete:");
+            idCadete = Console.ReadLine();
+            jornal = local.JornalACobrar(idCadete);
+            foreach (Cadete persona in local.ListaCadetes)
+            {
+                if (persona.Id == idCadete)
+                {
+                    Console.WriteLine($"{persona.Nombre} debe cobrar: ${jornal}");
+                }
+            }
+            break;
+        case 5:
+        continuar = 'N';
             break;
     }
+    entradaUsuario = 99999;
 }
