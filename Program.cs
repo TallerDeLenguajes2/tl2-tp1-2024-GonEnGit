@@ -5,6 +5,7 @@ using EspacioTextos;
 Random rnd = new Random();
 int tamanioPantalla = Console.WindowWidth, pedidoSeleccionado, cadeteSeleccionado;
 int entradaUsuario = 99999, nuevoPedidoNum, contador = 0, segundoCadeteSeleccionado;
+int dineroGanado = 0, jornal, promedio, enviosPorCadete = 0, totalDeEnvios = 0;
 char continuar = 'S';
 string linea, nuevoCliNombre, nuevoClidireccion;
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
@@ -28,6 +29,7 @@ while (continuar == 'S')
     Console.WriteLine(Textos.CentrarRenglon("4. Completar pedido.", tamanioPantalla));
     Console.WriteLine(Textos.CentrarRenglon("5. Listar pedidos.", tamanioPantalla));
     Console.WriteLine(Textos.CentrarRenglon("6. Informe del día.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("7. Salir.", tamanioPantalla));
     Console.Write(Textos.CentrarRenglon("Que tarea quiere realizar? ", tamanioPantalla));
     while (entradaUsuario == 99999)
     {
@@ -168,7 +170,32 @@ while (continuar == 'S')
             }
             break;
         case 6:
+            // en teoria al final del dia todos los pedidos estan como "Completados"
+            // supongo que podes obviar ese control
+            Console.WriteLine("\nResumen del dia: ");
+            foreach (Cadete cadete in local.ListaCadetes)
+            {
+                foreach (Pedido pedido in cadete.ListaPedidos)
+                {
+                    enviosPorCadete += 1;
+                }
+                totalDeEnvios += enviosPorCadete;
+                jornal = enviosPorCadete * 500;
+                dineroGanado += jornal;
+                Console.WriteLine($"\n{cadete.Nombre}, realizó {enviosPorCadete} envios.");
+                Console.WriteLine($"Jornal: ${jornal}.");
+                enviosPorCadete = 0;
+                jornal = 0;
+            }
+            promedio = totalDeEnvios / local.ListaCadetes.Count;
+            Console.WriteLine($"\nEnvios realizados: {totalDeEnvios}.");
+            Console.WriteLine($"Ganancia del dia: ${dineroGanado}.");
+            Console.WriteLine($"Promedio de pedidos por cadete: {promedio}.");
+            break;
+        case 7:
+            continuar = 'N';
             break;
     }
     entradaUsuario = 99999;
 }
+Console.WriteLine("Nos vemos!");
