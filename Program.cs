@@ -139,7 +139,7 @@ while (continuar == 'S')
                 {
                     if (pedido.Numero == entradaUsuario)
                     {
-                        pedido.EstadoActual = Pedido.Estados.Completado;
+                        pedido.CambiarEstado();
                     }
                 }
             }

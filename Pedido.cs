@@ -31,6 +31,11 @@ public class Pedido
         cliente = new Cliente(nombreCli, dirCli, telCli, datosDir);
         EstadoActual = Estados.Pendiente;
     }
+
+    public void CambiarEstado()
+    {
+        estadoActual = Estados.Completado;
+    }
 }
 
 // otra forma de crear el objeto cliente
