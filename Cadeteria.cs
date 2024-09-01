@@ -21,13 +21,15 @@ public class Cadeteria
 
     public List<Cadete> nuevaLista()
     {
+        int idCadete;
         List<Cadete> listaTemp = new List<Cadete>();
         string[] partes, renglonesArchivo = File.ReadAllLines("csv/DatosCadetes.csv");
 
         foreach (string renglon in renglonesArchivo)
         {
             partes = renglon.Split(",");
-            Cadete nuevoCadete = new Cadete(partes[0], partes[1], partes[2], partes[3]);
+            int.TryParse(partes[0], out idCadete);
+            Cadete nuevoCadete = new Cadete(idCadete, partes[1], partes[2], partes[3]);
             listaTemp.Add(nuevoCadete);
         }
 
