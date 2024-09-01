@@ -9,7 +9,7 @@ public static class Textos
         espacios = (espacios -  linea.Length) /2;
         while (espacios >= 0)
         {
-            linea = " " + linea + " ";
+            linea = " " + linea;
             espacios--;
         }
 
@@ -21,7 +21,7 @@ public static class Textos
         bool pruebaOpciones;
         int valor;
         pruebaOpciones = int.TryParse(entrada, out valor);
-        if (pruebaOpciones == false || valor <= 0 || valor >= 5)
+        if (pruebaOpciones == false || valor <= 0 || valor >= 7)
         {
             valor = 99999;
         }

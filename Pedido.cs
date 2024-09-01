@@ -19,6 +19,8 @@ public class Pedido
     public Cliente Cliente { get => cliente; set => cliente = value; }
     public Estados EstadoActual { get => estadoActual; set => estadoActual = value; }
 
+    public Pedido (){}
+
 // esto parece estar bien así, pasar el cliente por referencia
 // como trataste de hacer al principio, no sirve, se puede
 // pero eso significaria que al borrar el pedido el cliente no desaparece
