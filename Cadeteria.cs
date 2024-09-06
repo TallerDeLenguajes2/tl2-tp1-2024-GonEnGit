@@ -41,6 +41,7 @@ public class Cadeteria
     public void PrimerosPedidos()
     {
         int numero;
+        listaPedidos = new List<Pedido>();
         string[] datosPedido, datosCliente;
         string[] renglonesPedidos = File.ReadAllLines("csv/DatosPedidos.csv");
         string[] renglonesClientes = File.ReadAllLines("csv/DatosClientes.csv");
@@ -51,10 +52,15 @@ public class Cadeteria
             datosCliente = renglonesClientes[indice].Split(",");
             int.TryParse(datosPedido[0], out numero);
             Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
-            ListaPedidos.Add(nuevoPedido);
+            listaPedidos.Add(nuevoPedido);
         }
     }
 
+    public void CrearNuevoPedido(int pedidoNum, string pedidoObs, string cliNombre, string clidireccion, string cliTelefono, string cliDatosDir)
+    {
+        Pedido pedido = new Pedido(pedidoNum, pedidoObs, cliNombre, clidireccion, cliTelefono, cliDatosDir);
+        listaPedidos.Add(pedido);
+    }
     public void AsignarCadeteAPedido(int idCadete, int idPedido)
     {
         foreach (Pedido pedido in listaPedidos)

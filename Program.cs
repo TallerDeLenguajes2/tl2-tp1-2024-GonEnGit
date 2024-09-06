@@ -11,7 +11,6 @@ string linea, nuevoCliNombre, nuevoClidireccion;
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
 string[] datosArchivo, renglones;
 Pedido pedidoTemp = new Pedido();
-List<Pedido> pedidosSinAsignar = new List<Pedido>();
 
 datosArchivo = File.ReadAllLines("csv/DatosCadeteria.csv");
 linea = datosArchivo[0];
@@ -54,12 +53,11 @@ while (continuar == 'S')
             Console.Write("Ingrese el pedido: ");
             nuevoPedidoObs = Console.ReadLine();
             nuevoPedidoNum = rnd.Next(1,1000);
-            Pedido pedidoNuevo = new Pedido(nuevoPedidoNum, nuevoPedidoObs, nuevoCliNombre, nuevoClidireccion, nuevoCliTelefono, nuevoCliDatosDir);
-            pedidosSinAsignar.Add(pedidoNuevo);
+            local.CrearNuevoPedido(nuevoPedidoNum, nuevoPedidoObs, nuevoCliNombre, nuevoClidireccion, nuevoCliTelefono, nuevoCliDatosDir);
             break;
         case 2:
             Console.WriteLine("\nPedidos sin asignar: \n");
-            foreach (Pedido pedido in pedidosSinAsignar)
+            foreach (Pedido pedido in local.ListaPedidos)
             {
                 linea = Textos.ArmarPedido(pedido);
                 renglones = linea.Split(";");
@@ -77,30 +75,20 @@ while (continuar == 'S')
                 }
                 Console.WriteLine(" ");
             }
-            Console.WriteLine(" ");
+            contador = 0;
+            Console.WriteLine("\nCadetes:\n");
+            foreach (Cadete cadete in local.ListaCadetes)
+            {
+                contador += 1;
+                Console.WriteLine($"{contador}. {cadete.Nombre}");
+            }
             Console.Write("Ingrese el numero de pedido a asignar: ");
             int.TryParse(Console.ReadLine(), out pedidoSeleccionado);   // esto no tiene control, cuidado
             Console.Write("Ingrese el numero del cadete que se encargará del pedido: ");
             int.TryParse(Console.ReadLine(), out cadeteSeleccionado);   // esto no tiene control, cuidado
-            foreach (Cadete cadete in local.ListaCadetes)
-            {
-                if (cadete.Id == cadeteSeleccionado)
-                {
-                    foreach (Pedido pedido in pedidosSinAsignar)
-                    {
-                        if (pedido.Numero == pedidoSeleccionado)
-                        {
-                            pedidoTemp = pedido;
-                        }
-                    }
-                    cadete.ListaPedidos.Add(pedidoTemp);
-                    // es valido encadenar metodos así
-                    pedidosSinAsignar.RemoveAt(pedidosSinAsignar.IndexOf(pedidoTemp));
-                }
-            }
-            contador = 0;
+            local.AsignarCadeteAPedido(cadeteSeleccionado, pedidoSeleccionado);
             break;
-        case 3:
+        /*case 3:
             Console.Write("\nIngrese el numero del cadete que tiene el pedido actualmente: ");
             int.TryParse(Console.ReadLine(), out cadeteSeleccionado);
             Console.Write("Ingrese el numero del pedido a reasignar: ");
@@ -194,7 +182,7 @@ while (continuar == 'S')
             break;
         case 7:
             continuar = 'N';
-            break;
+            break;*/
     }
     entradaUsuario = 99999;
 }
