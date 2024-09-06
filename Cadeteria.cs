@@ -7,10 +7,12 @@ public class Cadeteria
     private string nombre;
     private string telefono;
     private List<Cadete> listaCadetes;
+    private List<Pedido> listaPedidos;
 
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
+    public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
     public Cadeteria(string nombreLocal, string telefonoLocal)
     {
@@ -38,7 +40,6 @@ public class Cadeteria
 
     public void PrimerosPedidos()
     {
-        Random rnd = new Random();
         int numero;
         string[] datosPedido, datosCliente;
         string[] renglonesPedidos = File.ReadAllLines("csv/DatosPedidos.csv");
@@ -50,8 +51,7 @@ public class Cadeteria
             datosCliente = renglonesClientes[indice].Split(",");
             int.TryParse(datosPedido[0], out numero);
             Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
-            numero = rnd.Next(0,2);
-            listaCadetes[numero].ListaPedidos.Add(nuevoPedido);
+            ListaPedidos.Add(nuevoPedido);
         }
     }
 }
