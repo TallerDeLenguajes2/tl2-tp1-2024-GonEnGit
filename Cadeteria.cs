@@ -54,4 +54,28 @@ public class Cadeteria
             ListaPedidos.Add(nuevoPedido);
         }
     }
+
+    public void AsignarCadeteAPedido(int idCadete, int idPedido)
+    {
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.Numero == idPedido)
+            {
+                pedido.NumeroCadete = idCadete;
+            }
+        }
+    }
+
+    public double JornalACobrar(int idCadete)
+    {
+        double total = 0;
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.NumeroCadete == idCadete)
+            {
+                total += 500;
+            }
+        }
+        return total;
+    }
 }

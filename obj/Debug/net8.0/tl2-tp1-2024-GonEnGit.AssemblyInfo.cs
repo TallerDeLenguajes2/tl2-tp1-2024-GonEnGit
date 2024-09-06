@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("tl2-tp1-2024-GonEnGit")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18d47d6fb8b1cb198daa291aa9c19beb9a1f8cf8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6a4ff99dd125d610e7e0c965f739bd11372e8c86")]
 [assembly: System.Reflection.AssemblyProductAttribute("tl2-tp1-2024-GonEnGit")]
 [assembly: System.Reflection.AssemblyTitleAttribute("tl2-tp1-2024-GonEnGit")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
