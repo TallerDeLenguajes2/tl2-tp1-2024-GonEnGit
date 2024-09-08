@@ -87,12 +87,38 @@ public class Cadeteria
         }
     }
 
+    public int CantPedidosPorCadete(int idCadete)
+    {
+        int total = 0;
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.NumeroCadete == idCadete && pedido.EstadoActual == Pedido.Estados.Completado)
+            {
+                total += 1;
+            }
+        }
+        return total;
+    }
+
+    public int ContarPedidosIncompletos()
+    {
+        int total = 0;
+        foreach (Pedido pedido in listaPedidos)
+        {
+            if (pedido.EstadoActual == Pedido.Estados.Pendiente)
+            {
+                total += 1;
+            }
+        }
+        return total;
+    }
+
     public double JornalACobrar(int idCadete)
     {
         double total = 0;
         foreach (Pedido pedido in listaPedidos)
         {
-            if (pedido.NumeroCadete == idCadete)
+            if (pedido.NumeroCadete == idCadete && pedido.EstadoActual == Pedido.Estados.Completado)
             {
                 total += 500;
             }

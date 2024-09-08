@@ -1,11 +1,13 @@
 ﻿
+using System.Runtime.InteropServices;
 using EspacioEmpresa;
 using EspacioTextos;
 
 Random rnd = new Random();
 int tamanioPantalla = Console.WindowWidth, pedidoSeleccionado = 99999, cadeteSeleccionado = 99999;
-int entradaUsuario = 99999, nuevoPedidoNum, contador, segundoCadeteSeleccionado;
-int dineroGanado = 0, jornal, promedio, enviosPorCadete = 0, totalDeEnvios = 0;
+int entradaUsuario = 99999, nuevoPedidoNum, contador = 0, cantPeidos;
+int promedio, enviosPorCadete = 0, totalDeEnvios = 0;
+double jornal = 0, dineroGanado = 0;
 char continuar = 'S';
 string linea, nuevoCliNombre, nuevoClidireccion;
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
@@ -131,7 +133,7 @@ while (continuar == 'S')
             contador = 0;
             foreach (Pedido pedido in local.ListaPedidos)
             {
-                if (pedido.EstadoActual == Pedido.Estados.Pendiente)
+                if (pedido.EstadoActual == Pedido.Estados.Pendiente && pedido.NumeroCadete != 99999)
                 {
                     linea = Textos.ArmarPedido(pedido);
                     renglones = linea.Split(";");
@@ -166,59 +168,50 @@ while (continuar == 'S')
                     break;
                 }
             }
-            pedidoSeleccionado = 99999;
+            pedidoSeleccionado = 99999; contador = 0;
             break;
-        /*case 4:
-            foreach (Cadete cadete in local.ListaCadetes)
+        case 4:
+            Console.WriteLine("\nPedidos registrados: ");
+            foreach (Pedido pedido in local.ListaPedidos)
             {
-                Console.WriteLine($"Pedidos de {cadete.Nombre}");
-                foreach (Pedido pedido in cadete.ListaPedidos)
+                linea = Textos.ArmarPedido(pedido);
+                renglones = linea.Split(";");
+                contador += 1;
+                for (int indice = 0; indice < renglones.Length; indice++)
                 {
-                    contador += 1;
-                    linea = Textos.ArmarPedido(pedido);
-                    renglones = linea.Split(";");
-                    for (int indice = 0; indice < renglones.Length; indice++)
+                    if (indice == 0)
                     {
-                        if (indice == 0)
-                        {
-                            Console.WriteLine($"{contador}. {renglones[0]}");
-                        }
-                        else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
-                        {
-                            Console.WriteLine($"{renglones[indice]}");
-                        }
+                        Console.WriteLine($"\n{contador}. {renglones[0]}");
                     }
-                    Console.WriteLine(" ");
+                    else if (indice != renglones.Length)
+                    {
+                        Console.WriteLine($"   {renglones[indice]}");
+                    }
                 }
-                Console.WriteLine(" ");
+                Console.WriteLine("   Encargado: " + Textos.CadeteEncargado(local, pedido.NumeroCadete) + $" - ID: {pedido.NumeroCadete}");
             }
             break;
-        /*case 5:
-            // en teoria al final del dia todos los pedidos estan como "Completados"
-            // supongo que podes obviar ese control
+        case 5:
             Console.WriteLine("\nResumen del dia: ");
             foreach (Cadete cadete in local.ListaCadetes)
             {
-                foreach (Pedido pedido in cadete.ListaPedidos)
-                {
-                    enviosPorCadete += 1;
-                }
+                contador += 1;
+                enviosPorCadete = local.CantPedidosPorCadete(cadete.Id);
+                jornal = local.JornalACobrar(cadete.Id);
                 totalDeEnvios += enviosPorCadete;
-                jornal = enviosPorCadete * 500;
                 dineroGanado += jornal;
-                Console.WriteLine($"\n{cadete.Nombre}, realizó {enviosPorCadete} envios.");
-                Console.WriteLine($"Jornal: ${jornal}.");
-                enviosPorCadete = 0;
-                jornal = 0;
+                Console.WriteLine($"\n{cadete.Nombre} completó " + enviosPorCadete + " pedidos.");
+                Console.WriteLine("Le corresponde cobrar: $" + jornal);
             }
-            promedio = totalDeEnvios / local.ListaCadetes.Count;
-            Console.WriteLine($"\nEnvios realizados: {totalDeEnvios}.");
+            promedio = totalDeEnvios / contador;
+            Console.WriteLine("\nNo se completaron: " + local.ContarPedidosIncompletos() + " pedidos.");
+            Console.WriteLine($"Envios realizados: {totalDeEnvios}.");
             Console.WriteLine($"Ganancia del dia: ${dineroGanado}.");
-            Console.WriteLine($"Promedio de pedidos por cadete: {promedio}.");
+            Console.WriteLine($"Promedio de pedidos completados por cadete: {promedio}.");
             break;
-        /*case 6:
+        case 6:
             continuar = 'N';
-            break;*/
+            break;
     }
     entradaUsuario = 99999;
 }

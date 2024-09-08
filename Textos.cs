@@ -22,4 +22,22 @@ public static class Textos
                 $"Direccion: {pedido.Cliente.Direccion}, {pedido.Cliente.DatosDir};Telefono: {pedido.Cliente.Telefono};" +
                 $"Observacion: {pedido.Observacion};Estado: {pedido.EstadoActual}";
     }
+
+    public static string CadeteEncargado(Cadeteria local, int idCadete)
+    {
+        string nombre = "";
+        foreach (Cadete cadete in local.ListaCadetes)
+        {
+            if (cadete.Id == idCadete)
+            {
+                nombre = cadete.Nombre;
+                break;
+            }
+            else
+            {
+                nombre = "Sin Cadete";
+            }
+        }
+        return nombre;
+    }
 }

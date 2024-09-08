@@ -1,0 +1,51 @@
+/* mostrar los pedidos por cadete*/
+
+Console.WriteLine("\nPedidos sin asignar:");
+contador = 0;
+foreach (Pedido pedido in local.ListaPedidos)
+{
+    if (pedido.NumeroCadete == 99999)
+    {
+        linea = Textos.ArmarPedido(pedido);
+        renglones = linea.Split(";");
+        contador += 1;
+        for (int indice = 0; indice < renglones.Length; indice++)
+        {
+            if (indice == 0)
+            {
+                Console.WriteLine($"\n{contador}. {renglones[0]}");
+            }
+            else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
+            {
+                Console.WriteLine($"   {renglones[indice]}");
+            }
+        }
+    }
+}
+
+foreach (Cadete cadete in local.ListaCadetes)
+{
+    contador = 0;
+    Console.WriteLine($"\nPedidos de {cadete.Nombre} - ID: {cadete.Id}:");
+    foreach (Pedido pedido in local.ListaPedidos)
+    {
+        if (pedido.NumeroCadete == cadete.Id && pedido.EstadoActual == Pedido.Estados.Pendiente)
+        {
+            linea = Textos.ArmarPedido(pedido);
+            renglones = linea.Split(";");
+            contador += 1;
+            for (int indice = 0; indice < renglones.Length; indice++)
+            {
+                if (indice == 0)
+                {
+                    Console.WriteLine($"\n{contador}. {renglones[0]}");
+                }
+                else if (indice != renglones.Length)
+                {
+                    Console.WriteLine($"   {renglones[indice]}");
+                }
+            }
+        }
+    }
+}
+Console.WriteLine(" ");
