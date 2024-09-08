@@ -64,6 +64,36 @@ public static class Controles
         {
             foreach (Pedido pedido in local.ListaPedidos)
             {
+                if (pedido.Numero == aux)
+                {
+                    valor = pedido.Numero;
+                    break;
+                }
+                else
+                {
+                    valor = 99999;
+                }
+            }
+        }
+
+        return valor;
+    }
+
+    public static int ControlarPedidoPendiente(string entrada, Cadeteria local)
+    {
+        int valor, aux;
+        bool opcionCorrecta;
+
+        opcionCorrecta = int.TryParse(entrada, out valor);
+        aux = valor;
+        if (!opcionCorrecta || valor < 1 || valor > 999)
+        {
+            valor = 99999;
+        }
+        else
+        {
+            foreach (Pedido pedido in local.ListaPedidos)
+            {
                 if (pedido.EstadoActual == Pedido.Estados.Pendiente && pedido.Numero == aux)
                 {
                     valor = pedido.Numero;

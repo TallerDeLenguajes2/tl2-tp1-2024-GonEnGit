@@ -22,7 +22,7 @@ local.PrimerosPedidos();
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
 {
-    Console.WriteLine(Textos.CentrarRenglon("\n1. Alta de pedidos.", tamanioPantalla));
+    Console.WriteLine("\n" + Textos.CentrarRenglon("1. Alta de pedidos.", tamanioPantalla));
     Console.WriteLine(Textos.CentrarRenglon("2. Asignar o reasignar un pedido.", tamanioPantalla)); // desde el TP2 son lo mismo basicamente
     Console.WriteLine(Textos.CentrarRenglon("3. Completar pedido.", tamanioPantalla));
     Console.WriteLine(Textos.CentrarRenglon("4. Listar pedidos.", tamanioPantalla));
@@ -55,7 +55,7 @@ while (continuar == 'S')
             break;
 
         case 2:
-            Console.WriteLine("\nPedidos sin asignar: \n");
+            Console.WriteLine("\nPedidos sin asignar:");
             contador = 0;
             foreach (Pedido pedido in local.ListaPedidos)
             {
@@ -68,17 +68,15 @@ while (continuar == 'S')
                     {
                         if (indice == 0)
                         {
-                            Console.WriteLine($"{contador}. {renglones[0]}");
+                            Console.WriteLine($"\n{contador}. {renglones[0]}");
                         }
                         else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
                         {
-                            Console.WriteLine($"{renglones[indice]}");
+                            Console.WriteLine($"   {renglones[indice]}");
                         }
                     }
                 }
             }
-            Console.WriteLine(" ");
-
 
             foreach (Cadete cadete in local.ListaCadetes)
             {
@@ -86,7 +84,7 @@ while (continuar == 'S')
                 Console.WriteLine($"\nPedidos de {cadete.Nombre} - ID: {cadete.Id}:");
                 foreach (Pedido pedido in local.ListaPedidos)
                 {
-                    if (pedido.NumeroCadete == cadete.Id)
+                    if (pedido.NumeroCadete == cadete.Id && pedido.EstadoActual == Pedido.Estados.Pendiente)
                     {
                         linea = Textos.ArmarPedido(pedido);
                         renglones = linea.Split(";");
@@ -97,9 +95,9 @@ while (continuar == 'S')
                             {
                                 Console.WriteLine($"\n{contador}. {renglones[0]}");
                             }
-                            else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
+                            else if (indice != renglones.Length)
                             {
-                                Console.WriteLine($"{renglones[indice]}");
+                                Console.WriteLine($"   {renglones[indice]}");
                             }
                         }
                     }
@@ -128,20 +126,47 @@ while (continuar == 'S')
             pedidoSeleccionado = 99999; cadeteSeleccionado = 99999;
             break;
 
-        /*case 3:
-            Console.Write("Ingrese el numero de pedido a completar: ");
-            int.TryParse(Console.ReadLine(), out entradaUsuario);
-            foreach (Cadete cadete in local.ListaCadetes)
+        case 3:
+            Console.WriteLine("\nPedidos en curso:");
+            contador = 0;
+            foreach (Pedido pedido in local.ListaPedidos)
             {
-                Console.WriteLine($"Pedidos de {cadete.Nombre}");
-                foreach (Pedido pedido in cadete.ListaPedidos)
+                if (pedido.EstadoActual == Pedido.Estados.Pendiente)
                 {
-                    if (pedido.Numero == entradaUsuario)
+                    linea = Textos.ArmarPedido(pedido);
+                    renglones = linea.Split(";");
+                    contador += 1;
+                    for (int indice = 0; indice < renglones.Length; indice++)
                     {
-                        pedido.CambiarEstado();
+                        if (indice == 0)
+                        {
+                            Console.WriteLine($"\n{contador}. {renglones[0]}");
+                        }
+                        else if (indice != renglones.Length)
+                        {
+                            Console.WriteLine($"   {renglones[indice]}");
+                        }
                     }
                 }
             }
+            Console.Write("\nIngrese el numero de pedido a completar: ");
+            while (pedidoSeleccionado == 99999)
+            {
+                pedidoSeleccionado = Controles.ControlarPedidoPendiente(Console.ReadLine(), local);
+                if (pedidoSeleccionado == 99999)
+                {
+                    Console.Write("Ingrese el ID de un pedido existente: ");
+                }
+            }
+            foreach (Pedido pedido in local.ListaPedidos)
+            {
+                if (pedido.Numero == pedidoSeleccionado)
+                {
+                    pedido.CambiarEstado();
+                    break;
+                }
+            }
+            pedidoSeleccionado = 99999;
             break;
         /*case 4:
             foreach (Cadete cadete in local.ListaCadetes)

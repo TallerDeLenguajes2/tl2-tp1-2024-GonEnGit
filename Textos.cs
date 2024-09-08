@@ -18,7 +18,7 @@ public static class Textos
 
     public static string ArmarPedido(Pedido pedido)
     {
-        return  $"Pedido N°: {pedido.Numero};Nobre del cliente: {pedido.Cliente.Nombre};" +
+        return  $"Pedido N°: {pedido.Numero};Nombre del cliente: {pedido.Cliente.Nombre};" +
                 $"Direccion: {pedido.Cliente.Direccion}, {pedido.Cliente.DatosDir};Telefono: {pedido.Cliente.Telefono};" +
                 $"Observacion: {pedido.Observacion};Estado: {pedido.EstadoActual}";
     }
