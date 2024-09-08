@@ -40,6 +40,7 @@ public class Cadeteria
 
     public void PrimerosPedidos()
     {
+        Random rnd = new Random();
         int numero;
         listaPedidos = new List<Pedido>();
         string[] datosPedido, datosCliente;
@@ -54,6 +55,19 @@ public class Cadeteria
             Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
             listaPedidos.Add(nuevoPedido);
         }
+
+        for (int i = 0; i < 4; i++)
+        {
+            numero = rnd.Next(1,3);
+            if (numero == 1)
+            {
+                listaPedidos[i].NumeroCadete = 123;
+            }
+            else
+            {
+                listaPedidos[i].NumeroCadete = 456;
+            }
+        }
     }
 
     public void CrearNuevoPedido(int pedidoNum, string pedidoObs, string cliNombre, string clidireccion, string cliTelefono, string cliDatosDir)
@@ -61,6 +75,7 @@ public class Cadeteria
         Pedido pedido = new Pedido(pedidoNum, pedidoObs, cliNombre, clidireccion, cliTelefono, cliDatosDir);
         listaPedidos.Add(pedido);
     }
+
     public void AsignarCadeteAPedido(int idCadete, int idPedido)
     {
         foreach (Pedido pedido in listaPedidos)

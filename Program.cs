@@ -3,8 +3,8 @@ using EspacioEmpresa;
 using EspacioTextos;
 
 Random rnd = new Random();
-int tamanioPantalla = Console.WindowWidth, pedidoSeleccionado, cadeteSeleccionado;
-int entradaUsuario = 99999, nuevoPedidoNum, contador = 0, segundoCadeteSeleccionado;
+int tamanioPantalla = Console.WindowWidth, pedidoSeleccionado = 99999, cadeteSeleccionado = 99999;
+int entradaUsuario = 99999, nuevoPedidoNum, contador, segundoCadeteSeleccionado;
 int dineroGanado = 0, jornal, promedio, enviosPorCadete = 0, totalDeEnvios = 0;
 char continuar = 'S';
 string linea, nuevoCliNombre, nuevoClidireccion;
@@ -19,24 +19,22 @@ datosArchivo = linea.Split(",");
 Cadeteria local = new Cadeteria(datosArchivo[0], datosArchivo[1]);
 local.PrimerosPedidos();
 
-Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla) + "\n");
+Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
 {
-    Console.WriteLine(Textos.CentrarRenglon("1. Alta de pedidos.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("2. Asignar nuevo pedido.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("3. Reasignar un pedido.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("4. Completar pedido.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("5. Listar pedidos.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("6. Informe del día.", tamanioPantalla));
-    Console.WriteLine(Textos.CentrarRenglon("7. Salir.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("\n1. Alta de pedidos.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("2. Asignar o reasignar un pedido.", tamanioPantalla)); // desde el TP2 son lo mismo basicamente
+    Console.WriteLine(Textos.CentrarRenglon("3. Completar pedido.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("4. Listar pedidos.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("5. Informe del día.", tamanioPantalla));
+    Console.WriteLine(Textos.CentrarRenglon("6. Salir.", tamanioPantalla));
     Console.Write(Textos.CentrarRenglon("Que tarea quiere realizar? ", tamanioPantalla));
     while (entradaUsuario == 99999)
     {
-        linea = Console.ReadLine();
-        entradaUsuario = Textos.ControlEntrada(linea);
+        entradaUsuario = Controles.ControlarOpcionMenu(Console.ReadLine());
         if (entradaUsuario == 99999)
         {
-            Console.WriteLine(Textos.CentrarRenglon("Ingrese una opcion valida.",tamanioPantalla));
+            Console.WriteLine("Ingrese una de las opciones disponibles.");
         }
     }
     switch (entradaUsuario)
@@ -52,72 +50,85 @@ while (continuar == 'S')
             nuevoCliTelefono = Console.ReadLine();
             Console.Write("Ingrese el pedido: ");
             nuevoPedidoObs = Console.ReadLine();
-            nuevoPedidoNum = rnd.Next(1,1000);
+            nuevoPedidoNum = rnd.Next(1,1000);      // tendrias que controlar que no se repitan
             local.CrearNuevoPedido(nuevoPedidoNum, nuevoPedidoObs, nuevoCliNombre, nuevoClidireccion, nuevoCliTelefono, nuevoCliDatosDir);
             break;
+
         case 2:
             Console.WriteLine("\nPedidos sin asignar: \n");
+            contador = 0;
             foreach (Pedido pedido in local.ListaPedidos)
             {
-                linea = Textos.ArmarPedido(pedido);
-                renglones = linea.Split(";");
-                contador += 1;
-                for (int indice = 0; indice < renglones.Length; indice++)
+                if (pedido.NumeroCadete == 99999)
                 {
-                    if (indice == 0)
+                    linea = Textos.ArmarPedido(pedido);
+                    renglones = linea.Split(";");
+                    contador += 1;
+                    for (int indice = 0; indice < renglones.Length; indice++)
                     {
-                        Console.WriteLine($"{contador}. {renglones[0]}");
-                    }
-                    else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
-                    {
-                        Console.WriteLine($"{renglones[indice]}");
-                    }
-                }
-                Console.WriteLine(" ");
-            }
-            contador = 0;
-            Console.WriteLine("\nCadetes:\n");
-            foreach (Cadete cadete in local.ListaCadetes)
-            {
-                contador += 1;
-                Console.WriteLine($"{contador}. {cadete.Nombre}");
-            }
-            Console.Write("Ingrese el numero de pedido a asignar: ");
-            int.TryParse(Console.ReadLine(), out pedidoSeleccionado);   // esto no tiene control, cuidado
-            Console.Write("Ingrese el numero del cadete que se encargará del pedido: ");
-            int.TryParse(Console.ReadLine(), out cadeteSeleccionado);   // esto no tiene control, cuidado
-            local.AsignarCadeteAPedido(cadeteSeleccionado, pedidoSeleccionado);
-            break;
-        /*case 3:
-            Console.Write("\nIngrese el numero del cadete que tiene el pedido actualmente: ");
-            int.TryParse(Console.ReadLine(), out cadeteSeleccionado);
-            Console.Write("Ingrese el numero del pedido a reasignar: ");
-            int.TryParse(Console.ReadLine(), out pedidoSeleccionado);
-            foreach (Cadete cadete in local.ListaCadetes)  // buscas el cadete que tiene el pedido
-            {
-                if (cadete.Id == cadeteSeleccionado)
-                {  
-                    foreach (Pedido pedido in cadete.ListaPedidos)
-                    {
-                        if (pedido.Numero == pedidoSeleccionado)
+                        if (indice == 0)
                         {
-                            pedidoTemp = pedido;
-                            cadete.ListaPedidos.RemoveAt(cadete.ListaPedidos.IndexOf(pedido));
+                            Console.WriteLine($"{contador}. {renglones[0]}");
+                        }
+                        else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
+                        {
+                            Console.WriteLine($"{renglones[indice]}");
                         }
                     }
                 }
             }
-            Console.Write("Ingrese el numero del cadete que se encargará del pedido: ");
-            int.TryParse(Console.ReadLine(), out cadeteSeleccionado);
+            Console.WriteLine(" ");
+
+
             foreach (Cadete cadete in local.ListaCadetes)
             {
-                if (cadete.Id == cadeteSeleccionado)
+                contador = 0;
+                Console.WriteLine($"\nPedidos de {cadete.Nombre} - ID: {cadete.Id}:");
+                foreach (Pedido pedido in local.ListaPedidos)
                 {
-                    cadete.ListaPedidos.Add(pedidoTemp);
+                    if (pedido.NumeroCadete == cadete.Id)
+                    {
+                        linea = Textos.ArmarPedido(pedido);
+                        renglones = linea.Split(";");
+                        contador += 1;
+                        for (int indice = 0; indice < renglones.Length; indice++)
+                        {
+                            if (indice == 0)
+                            {
+                                Console.WriteLine($"\n{contador}. {renglones[0]}");
+                            }
+                            else if (indice != renglones.Length - 1) // el estado es evidente, no hace falta aquí
+                            {
+                                Console.WriteLine($"{renglones[indice]}");
+                            }
+                        }
+                    }
                 }
             }
+            Console.WriteLine(" ");
+            Console.Write("Ingrese el numero del pedido: ");
+            while (pedidoSeleccionado == 99999)
+            {
+                pedidoSeleccionado = Controles.ControlarPedidoExistente(Console.ReadLine(), local);
+                if (pedidoSeleccionado == 99999)
+                {
+                    Console.Write("Ingrese el ID de un pedido existente: ");
+                }
+            }
+            Console.Write("\nIngrese el numero del cadete que se encargará del pedido: ");
+            while (cadeteSeleccionado == 99999)
+            {
+                cadeteSeleccionado = Controles.ControlarCadeteExistente(Console.ReadLine(), local);
+                if (cadeteSeleccionado == 99999)
+                {
+                    Console.Write("Ingrese el ID de un cadete registrado: ");
+                }
+            }
+            local.AsignarCadeteAPedido(cadeteSeleccionado, pedidoSeleccionado);
+            pedidoSeleccionado = 99999; cadeteSeleccionado = 99999;
             break;
-        case 4:
+
+        /*case 3:
             Console.Write("Ingrese el numero de pedido a completar: ");
             int.TryParse(Console.ReadLine(), out entradaUsuario);
             foreach (Cadete cadete in local.ListaCadetes)
@@ -132,7 +143,7 @@ while (continuar == 'S')
                 }
             }
             break;
-        case 5:
+        /*case 4:
             foreach (Cadete cadete in local.ListaCadetes)
             {
                 Console.WriteLine($"Pedidos de {cadete.Nombre}");
@@ -157,7 +168,7 @@ while (continuar == 'S')
                 Console.WriteLine(" ");
             }
             break;
-        case 6:
+        /*case 5:
             // en teoria al final del dia todos los pedidos estan como "Completados"
             // supongo que podes obviar ese control
             Console.WriteLine("\nResumen del dia: ");
@@ -180,7 +191,7 @@ while (continuar == 'S')
             Console.WriteLine($"Ganancia del dia: ${dineroGanado}.");
             Console.WriteLine($"Promedio de pedidos por cadete: {promedio}.");
             break;
-        case 7:
+        /*case 6:
             continuar = 'N';
             break;*/
     }
