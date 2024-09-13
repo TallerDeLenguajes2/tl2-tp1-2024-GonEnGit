@@ -12,7 +12,7 @@ public static class Controles
         bool opcionCorrecta;
 
         opcionCorrecta = int.TryParse(tipo, out valor);
-        if (!opcionCorrecta || valor < 1 || valor > 7)
+        if (!opcionCorrecta || valor < 1 || valor > 2)
         {
             respuesta = "error";
         }

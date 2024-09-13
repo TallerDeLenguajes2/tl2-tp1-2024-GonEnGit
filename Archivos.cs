@@ -45,7 +45,8 @@ public class LectorCSV() : Lector
 
     public override List<Pedido> LeerArchivoPedidos()
     {
-
+        List<Pedido> lista = new List<Pedido>();
+        return lista;
     }
 }
 
@@ -55,11 +56,13 @@ public class LectorJSON() : Lector
     // no podes cambiar la firma de los metodos con el override
     public override Cadeteria LeerArchivoCadeteria()
     {
-
+        Cadeteria local = new Cadeteria("nombre" , "telefono");
+        return local;
     }
     public override List<Cadete> LeerArchivoCadetes()
     {
         string datosDeArchivo;
+        List<Cadete> lista = new List<Cadete>();
 
         using (FileStream arch = new FileStream("json", FileMode.Open))
         {
@@ -70,6 +73,11 @@ public class LectorJSON() : Lector
             }
         }
 
-        return datosDeArchivo;
+        return lista;
+    }
+    public override List<Pedido> LeerArchivoPedidos()
+    {
+        List<Pedido> lista = new List<Pedido>();
+        return lista;
     }
 }

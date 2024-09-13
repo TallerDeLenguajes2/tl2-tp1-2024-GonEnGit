@@ -1,5 +1,6 @@
 ﻿
 using System.Runtime.InteropServices;
+using Archivos;
 using EspacioEmpresa;
 using EspacioTextos;
 
@@ -12,24 +13,29 @@ char continuar = 'S';
 string linea, nuevoCliNombre, nuevoClidireccion, tipoDeArchivo = "error";
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
 string[] datosArchivo, renglones;
+Lector lector;
 
 /* tenes que cargar los primeros datos segun lo que se elija */
 Console.WriteLine("Que tipo de Archivo quiere usar?");
 Console.WriteLine("1 para CSV o 2 para JSON");
 while (tipoDeArchivo == "error")
 {
-    Controles.ControlarTipoDeArchivo(Console.ReadLine());
+    tipoDeArchivo = Controles.ControlarTipoDeArchivo(Console.ReadLine());
     if (tipoDeArchivo == "error")
     {
         Console.WriteLine("Ingrese un tipo de archivo valido.");
     }
 }
 
-datosArchivo = File.ReadAllLines("csv/DatosCadeteria.csv");
-linea = datosArchivo[0];
-datosArchivo = linea.Split(",");
-Cadeteria local = new Cadeteria(datosArchivo[0], datosArchivo[1]);
-
+if (tipoDeArchivo == "csv")
+{
+    lector = new LectorCSV();
+}
+else
+{
+    lector = new LectorJSON();
+}
+ Cadeteria local = lector.LeerArchivoCadeteria();
 
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
