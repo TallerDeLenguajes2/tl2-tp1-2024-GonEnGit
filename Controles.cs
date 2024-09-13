@@ -5,6 +5,31 @@ namespace EspacioTextos;
 
 public static class Controles
 {
+    public static string ControlarTipoDeArchivo(string tipo)
+    {
+        int valor;
+        string respuesta;
+        bool opcionCorrecta;
+
+        opcionCorrecta = int.TryParse(tipo, out valor);
+        if (!opcionCorrecta || valor < 1 || valor > 7)
+        {
+            respuesta = "error";
+        }
+        else
+        {
+            if (valor == 1)
+            {
+                respuesta = "csv";
+            }
+            else
+            {
+                respuesta = "json";
+            }
+        }
+
+        return respuesta;
+    }
     public static int ControlarOpcionMenu(string entrada)
     {
         int valor;

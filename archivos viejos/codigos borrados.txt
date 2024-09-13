@@ -49,3 +49,22 @@ foreach (Cadete cadete in local.ListaCadetes)
     }
 }
 Console.WriteLine(" ");
+
+
+// nuevaLista se borra
+public List<Cadete> nuevaLista()
+{
+    int idCadete;
+    List<Cadete> listaTemp = new List<Cadete>();
+    string[] partes, renglonesArchivo = File.ReadAllLines("csv/DatosCadetes.csv");
+
+    foreach (string renglon in renglonesArchivo)
+    {
+        partes = renglon.Split(",");
+        int.TryParse(partes[0], out idCadete);
+        Cadete nuevoCadete = new Cadete(idCadete, partes[1], partes[2], partes[3]);
+        listaTemp.Add(nuevoCadete);
+    }
+
+    return listaTemp;
+}

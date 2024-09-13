@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Archivos;
 
 namespace EspacioEmpresa;
 
@@ -9,6 +10,8 @@ public class Cadeteria
     private List<Cadete> listaCadetes;
     private List<Pedido> listaPedidos;
 
+    //private List<Cadete> listaCadetesTemp;
+
     public string Nombre { get => nombre; set => nombre = value; }
     public string Telefono { get => telefono; set => telefono = value; }
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
@@ -18,34 +21,40 @@ public class Cadeteria
     {
         Nombre = nombreLocal;
         Telefono = telefonoLocal;
-        listaCadetes = nuevaLista();
+        listaCadetes = new List<Cadete>();
+        listaPedidos = new List<Pedido>();
     }
 
-    public List<Cadete> nuevaLista()
+    public void CargarCadetes(string tipoDeArchivo)
     {
         int idCadete;
-        List<Cadete> listaTemp = new List<Cadete>();
-        string[] partes, renglonesArchivo = File.ReadAllLines("csv/DatosCadetes.csv");
+        string datosArchivo;
+        List<Cadete> listaTemp;
 
-        foreach (string renglon in renglonesArchivo)
+        if (tipoDeArchivo == "csv")
         {
-            partes = renglon.Split(",");
-            int.TryParse(partes[0], out idCadete);
-            Cadete nuevoCadete = new Cadete(idCadete, partes[1], partes[2], partes[3]);
-            listaTemp.Add(nuevoCadete);
+            LectorCSV lector = new LectorCSV();
+            listaTemp = lector.LeerArchivoCadetes();
+            foreach (Cadete registro in listaTemp)
+            {
+                listaCadetes.Add(registro);
+            }
+        }
+        else
+        {
+            LectorJSON lector = new LectorJSON();
         }
 
-        return listaTemp;
     }
 
-    public void PrimerosPedidos()
+    public void CargarPedidos(string tipoArchivo)
     {
         Random rnd = new Random();
         int numero;
         listaPedidos = new List<Pedido>();
         string[] datosPedido, datosCliente;
-        string[] renglonesPedidos = File.ReadAllLines("csv/DatosPedidos.csv");
-        string[] renglonesClientes = File.ReadAllLines("csv/DatosClientes.csv");
+        string[] renglonesPedidos = File.ReadAllLines(tipoArchivo + "/DatosPedidos." + tipoArchivo);
+        string[] renglonesClientes = File.ReadAllLines(tipoArchivo + "/DatosClientes." + tipoArchivo);
 
         for (int indice = 0; indice < renglonesPedidos.Length; indice++)
         {
@@ -55,8 +64,7 @@ public class Cadeteria
             Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
             listaPedidos.Add(nuevoPedido);
         }
-
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) // asigna cadetes a los pedidos
         {
             numero = rnd.Next(1,3);
             if (numero == 1)

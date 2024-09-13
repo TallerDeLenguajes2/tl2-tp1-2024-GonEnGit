@@ -9,17 +9,27 @@ int entradaUsuario = 99999, nuevoPedidoNum, contador = 0, cantPeidos;
 int promedio = 0, enviosPorCadete = 0, totalDeEnvios = 0;
 double jornal = 0, dineroGanado = 0;
 char continuar = 'S';
-string linea, nuevoCliNombre, nuevoClidireccion;
+string linea, nuevoCliNombre, nuevoClidireccion, tipoDeArchivo = "error";
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
 string[] datosArchivo, renglones;
-Pedido pedidoTemp = new Pedido();
+
+/* tenes que cargar los primeros datos segun lo que se elija */
+Console.WriteLine("Que tipo de Archivo quiere usar?");
+Console.WriteLine("1 para CSV o 2 para JSON");
+while (tipoDeArchivo == "error")
+{
+    Controles.ControlarTipoDeArchivo(Console.ReadLine());
+    if (tipoDeArchivo == "error")
+    {
+        Console.WriteLine("Ingrese un tipo de archivo valido.");
+    }
+}
 
 datosArchivo = File.ReadAllLines("csv/DatosCadeteria.csv");
 linea = datosArchivo[0];
 datosArchivo = linea.Split(",");
-
 Cadeteria local = new Cadeteria(datosArchivo[0], datosArchivo[1]);
-local.PrimerosPedidos();
+
 
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
