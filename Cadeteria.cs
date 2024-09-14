@@ -27,8 +27,6 @@ public class Cadeteria
 
     public void CargarCadetes(string tipoDeArchivo)
     {
-        int idCadete;
-        string datosArchivo;
         List<Cadete> listaTemp;
 
         if (tipoDeArchivo == "csv")
@@ -44,37 +42,23 @@ public class Cadeteria
         {
             LectorJSON lector = new LectorJSON();
         }
-
     }
 
     public void CargarPedidos(string tipoArchivo)
     {
-        Random rnd = new Random();
-        int numero;
-        listaPedidos = new List<Pedido>();
-        string[] datosPedido, datosCliente;
-        string[] renglonesPedidos = File.ReadAllLines(tipoArchivo + "/DatosPedidos." + tipoArchivo);
-        string[] renglonesClientes = File.ReadAllLines(tipoArchivo + "/DatosClientes." + tipoArchivo);
-
-        for (int indice = 0; indice < renglonesPedidos.Length; indice++)
+        List<Pedido> listaTemp;
+        if (tipoArchivo == "csv")
         {
-            datosPedido = renglonesPedidos[indice].Split(",");
-            datosCliente = renglonesClientes[indice].Split(",");
-            int.TryParse(datosPedido[0], out numero);
-            Pedido nuevoPedido = new Pedido(numero, datosPedido[1], datosCliente[0], datosCliente[1], datosCliente[2], datosCliente[3]);
-            listaPedidos.Add(nuevoPedido);
+            LectorCSV lector = new LectorCSV();
+            listaTemp = lector.LeerArchivoPedidos();
+            foreach (Pedido registro in listaTemp)
+            {
+                listaPedidos.Add(registro);
+            }
         }
-        for (int i = 0; i < 4; i++) // asigna cadetes a los pedidos
+        else
         {
-            numero = rnd.Next(1,3);
-            if (numero == 1)
-            {
-                listaPedidos[i].NumeroCadete = 123;
-            }
-            else
-            {
-                listaPedidos[i].NumeroCadete = 456;
-            }
+            
         }
     }
 

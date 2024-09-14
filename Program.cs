@@ -1,5 +1,4 @@
 ﻿
-using System.Runtime.InteropServices;
 using Archivos;
 using EspacioEmpresa;
 using EspacioTextos;
@@ -35,7 +34,9 @@ else
 {
     lector = new LectorJSON();
 }
- Cadeteria local = lector.LeerArchivoCadeteria();
+Cadeteria local = lector.LeerArchivoCadeteria();
+local.CargarCadetes(tipoDeArchivo);
+local.CargarPedidos(tipoDeArchivo);
 
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
