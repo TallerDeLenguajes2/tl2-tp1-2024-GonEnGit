@@ -12,11 +12,11 @@ public class Cadete
     public string Direccion { get => direccion; set => direccion = value; }
     public string Telefono { get => telefono; set => telefono = value; }
 
-    public Cadete(int id, string nombreCadete, string direccionCadete, string telefonoCadete)
+    public Cadete(int id, string nombre, string direccion, string telefono)
     {
         Id = id;
-        Nombre = nombreCadete;
-        Direccion = direccionCadete;
-        Telefono = telefonoCadete;
+        Nombre = nombre;
+        Direccion = direccion;
+        Telefono = telefono;
     }
 }

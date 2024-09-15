@@ -17,6 +17,7 @@ public class Cadeteria
     public List<Cadete> ListaCadetes { get => listaCadetes; set => listaCadetes = value; }
     public List<Pedido> ListaPedidos { get => listaPedidos; set => listaPedidos = value; }
 
+    public Cadeteria(){}
     public Cadeteria(string nombreLocal, string telefonoLocal)
     {
         Nombre = nombreLocal;
@@ -38,10 +39,6 @@ public class Cadeteria
                 listaCadetes.Add(registro);
             }
         }
-        else
-        {
-            LectorJSON lector = new LectorJSON();
-        }
     }
 
     public void CargarPedidos(string tipoArchivo)
@@ -55,10 +52,6 @@ public class Cadeteria
             {
                 listaPedidos.Add(registro);
             }
-        }
-        else
-        {
-            
         }
     }
 

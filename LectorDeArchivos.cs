@@ -1,4 +1,5 @@
 
+using System.Text.Json;
 using EspacioEmpresa;
 
 namespace Archivos;
@@ -77,9 +78,24 @@ public class LectorCSV() : Lector
 
 public class LectorJSON() : Lector
 {
+// si lo pensas, cuando guardas datos en un json, todas las clases
+// se serializan gracias dentro de cadeteria... lo otros 2 metodos,
+// para json, quedan redundantes
     public override Cadeteria LeerArchivoCadeteria()
     {
-        Cadeteria local = new Cadeteria("nombre" , "telefono");
+        string datosDeArchivo;
+        Cadeteria local = new Cadeteria();
+
+        using (FileStream archivo = new FileStream("json/DatosCadeteria.json", FileMode.Open))
+        {
+            using (StreamReader lector = new StreamReader(archivo))
+            {
+                datosDeArchivo = lector.ReadToEnd();
+                local = JsonSerializer.Deserialize<Cadeteria>(datosDeArchivo);
+                lector.Close();
+            }
+        }
+
         return local;
     }
 
@@ -88,11 +104,12 @@ public class LectorJSON() : Lector
         string datosDeArchivo;
         List<Cadete> lista = new List<Cadete>();
 
-        using (FileStream arch = new FileStream("json", FileMode.Open))
+        using (FileStream archivo = new FileStream("json/DatosCadetes.json", FileMode.Open))
         {
-            using (StreamReader lector = new StreamReader(arch))
+            using (StreamReader lector = new StreamReader(archivo))
             {
                 datosDeArchivo = lector.ReadToEnd();
+                lista = JsonSerializer.Deserialize<List<Cadete>>(datosDeArchivo);
                 lector.Close();
             }
         }
@@ -102,7 +119,17 @@ public class LectorJSON() : Lector
 
     public override List<Pedido> LeerArchivoPedidos()
     {
+        string datosPedidos, DatosClientes;
         List<Pedido> lista = new List<Pedido>();
+        /*using (FileStream archivo = new FileStream("json/DatosCadetes.json", FileMode.Open))
+        {
+            using (StreamReader lector = new StreamReader(archivo))
+            {
+                datosDeArchivo = lector.ReadToEnd();
+                lista = JsonSerializer.Deserialize<List<Cadete>>(datosDeArchivo);
+                lector.Close();
+            }
+        }*/
         return lista;
     }
 }

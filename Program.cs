@@ -13,10 +13,10 @@ string linea, nuevoCliNombre, nuevoClidireccion, tipoDeArchivo = "error";
 string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
 string[] datosArchivo, renglones;
 Lector lector;
+Cadeteria local;
 
 /* tenes que cargar los primeros datos segun lo que se elija */
-Console.WriteLine("Que tipo de Archivo quiere usar?");
-Console.WriteLine("1 para CSV o 2 para JSON");
+Console.Write("Que tipo de Archivo quiere usar? (1. CSV / 2. JSON): ");
 while (tipoDeArchivo == "error")
 {
     tipoDeArchivo = Controles.ControlarTipoDeArchivo(Console.ReadLine());
@@ -29,14 +29,15 @@ while (tipoDeArchivo == "error")
 if (tipoDeArchivo == "csv")
 {
     lector = new LectorCSV();
+    local = lector.LeerArchivoCadeteria();
+    local.CargarCadetes(tipoDeArchivo);
+    local.CargarPedidos(tipoDeArchivo);
 }
 else
 {
     lector = new LectorJSON();
+    local = lector.LeerArchivoCadeteria();
 }
-Cadeteria local = lector.LeerArchivoCadeteria();
-local.CargarCadetes(tipoDeArchivo);
-local.CargarPedidos(tipoDeArchivo);
 
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
@@ -72,7 +73,6 @@ while (continuar == 'S')
             nuevoPedidoNum = rnd.Next(1,1000);      // tendrias que controlar que no se repitan
             local.CrearNuevoPedido(nuevoPedidoNum, nuevoPedidoObs, nuevoCliNombre, nuevoClidireccion, nuevoCliTelefono, nuevoCliDatosDir);
             break;
-
         case 2:
             if (local.ContarPedidosIncompletos() != 0)
             {
@@ -98,7 +98,7 @@ while (continuar == 'S')
                         }
                     }
                 }
-    
+
                 foreach (Cadete cadete in local.ListaCadetes)
                 {
                     contador = 0;
@@ -151,7 +151,6 @@ while (continuar == 'S')
                 Console.WriteLine("No quedan pedidos sin completar.");
             }
             break;
-
         case 3:
             if (local.ContarPedidosIncompletos() != 0)
             {
@@ -245,4 +244,5 @@ while (continuar == 'S')
     }
     entradaUsuario = 99999;
 }
+Escritor.GuardarCadeteriaJSON(local);
 Console.WriteLine("Nos vemos!");
