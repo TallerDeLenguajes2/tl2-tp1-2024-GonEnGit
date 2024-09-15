@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Archivos;
+using EspacioArchivos;
 
 namespace EspacioEmpresa;
 

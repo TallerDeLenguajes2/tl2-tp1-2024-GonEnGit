@@ -1,7 +1,7 @@
 using System.Text.Json;
 using EspacioEmpresa;
 
-namespace Archivos;
+namespace EspacioArchivos;
 
 public static class Escritor
 {

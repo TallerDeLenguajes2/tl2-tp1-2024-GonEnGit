@@ -12,8 +12,6 @@ public class Cliente
     public string Telefono { get => telefono; set => telefono = value; }
     public string DatosDir { get => datosDir; set => datosDir = value; }
 
-    // en alguna clase te mencionarons que si coinciden los nombres de los
-    // parametros con los de los atributos, usas this. en el nombre del parametro
     public Cliente(string nombre, string direccion, string telefono, string datosDir)
     {
         this.nombre = nombre;

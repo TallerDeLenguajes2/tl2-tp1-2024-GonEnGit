@@ -12,11 +12,13 @@ public class Cadete
     public string Direccion { get => direccion; set => direccion = value; }
     public string Telefono { get => telefono; set => telefono = value; }
 
+    // en alguna clase te mencionaron que si coinciden los nombres de los
+    // parametros con los de los atributos, usas this. en el nombre del parametro
     public Cadete(int id, string nombre, string direccion, string telefono)
     {
-        Id = id;
-        Nombre = nombre;
-        Direccion = direccion;
-        Telefono = telefono;
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
     }
 }

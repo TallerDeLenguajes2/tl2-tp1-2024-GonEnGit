@@ -1,18 +1,19 @@
 ﻿
-using Archivos;
+using EspacioArchivos;
 using EspacioEmpresa;
 using EspacioTextos;
 
 Random rnd = new Random();
-int tamanioPantalla = Console.WindowWidth, pedidoSeleccionado = 99999, cadeteSeleccionado = 99999;
-int entradaUsuario = 99999, nuevoPedidoNum, contador = 0, cantPeidos;
-int promedio = 0, enviosPorCadete = 0, totalDeEnvios = 0;
-double jornal = 0, dineroGanado = 0;
+int tamanioPantalla = Console.WindowWidth;
+
+int pedidoSeleccionado, cadeteSeleccionado, entradaUsuario;
+int promedio = 0, enviosPorCadete, nuevoPedidoNum, contador;
+double jornal, dineroGanado = 0;
 char continuar = 'S';
-string linea, nuevoCliNombre, nuevoClidireccion, tipoDeArchivo = "error";
-string nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
+string nuevoCliNombre, nuevoClidireccion, nuevoCliDatosDir, nuevoCliTelefono, nuevoPedidoObs;
+string linea, tipoDeArchivo = "error";
 string[] datosArchivo, renglones;
-Lector lector;
+Lector lector; 
 Cadeteria local;
 
 /* tenes que cargar los primeros datos segun lo que se elija */
@@ -42,6 +43,7 @@ else
 Console.WriteLine("\n" + Textos.CentrarRenglon($"Bienvenido a {local.Nombre}, Telefono: {local.Telefono}", tamanioPantalla));
 while (continuar == 'S')
 {
+    contador = 0; pedidoSeleccionado = 99999; cadeteSeleccionado = 99999; entradaUsuario = 99999;
     Console.WriteLine("\n" + Textos.CentrarRenglon("1. Alta de pedidos.", tamanioPantalla));
     Console.WriteLine(Textos.CentrarRenglon("2. Asignar o reasignar un pedido.", tamanioPantalla)); // desde el TP2 son lo mismo basicamente
     Console.WriteLine(Textos.CentrarRenglon("3. Completar pedido.", tamanioPantalla));
@@ -77,7 +79,6 @@ while (continuar == 'S')
             if (local.ContarPedidosIncompletos() != 0)
             {
                 Console.WriteLine("\nPedidos sin asignar:");
-                contador = 0;
                 foreach (Pedido pedido in local.ListaPedidos)
                 {
                     if (pedido.NumeroCadete == 99999)
@@ -101,7 +102,6 @@ while (continuar == 'S')
 
                 foreach (Cadete cadete in local.ListaCadetes)
                 {
-                    contador = 0;
                     Console.WriteLine($"\nPedidos de {cadete.Nombre} - ID: {cadete.Id}:");
                     foreach (Pedido pedido in local.ListaPedidos)
                     {
@@ -144,7 +144,6 @@ while (continuar == 'S')
                     }
                 }
                 local.AsignarCadeteAPedido(cadeteSeleccionado, pedidoSeleccionado);
-                pedidoSeleccionado = 99999; cadeteSeleccionado = 99999;
             }
             else
             {
@@ -154,7 +153,7 @@ while (continuar == 'S')
         case 3:
             if (local.ContarPedidosIncompletos() != 0)
             {
-                Console.WriteLine("\nPedidos en curso:"); contador = 0;
+                Console.WriteLine("\nPedidos en curso:");
                 foreach (Pedido pedido in local.ListaPedidos)
                 {
                     if (pedido.EstadoActual == Pedido.Estados.Pendiente && pedido.NumeroCadete != 99999)
@@ -192,7 +191,6 @@ while (continuar == 'S')
                         break;
                     }
                 }
-                pedidoSeleccionado = 99999; contador = 0;
             }
             else
             {
@@ -212,7 +210,11 @@ while (continuar == 'S')
                     {
                         Console.WriteLine($"\n{contador}. {renglones[0]}");
                     }
-                    else if (indice != renglones.Length)
+                    else if (indice == 1)
+                    {
+                        Console.Write($"   {renglones[indice]}");
+                    }
+                    else
                     {
                         Console.WriteLine($"   {renglones[indice]}");
                     }
@@ -242,7 +244,7 @@ while (continuar == 'S')
             continuar = 'N';
             break;
     }
-    entradaUsuario = 99999;
 }
+// en honor a lo que te dijeron en el proyecto, se guarda siempre
 Escritor.GuardarCadeteriaJSON(local);
 Console.WriteLine("Nos vemos!");

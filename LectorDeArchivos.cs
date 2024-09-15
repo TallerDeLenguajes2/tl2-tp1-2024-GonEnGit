@@ -2,7 +2,7 @@
 using System.Text.Json;
 using EspacioEmpresa;
 
-namespace Archivos;
+namespace EspacioArchivos;
 
 public abstract class Lector
 {
